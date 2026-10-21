@@ -1,0 +1,97 @@
+print_ticket:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: printr
+    ticket:
+      required: true
+      example: '{"cut": true, "blocks": [{"type": "title", "text": "Bonjour !"}, {"type": "weather", "location": "Paris"}]}'
+      selector:
+        object:
+    label:
+      example: "Ticket du matin"
+      selector:
+        text:
+
+print_text:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: printr
+    text:
+      required: true
+      example: "Le lave-linge a terminé !"
+      selector:
+        text:
+          multiline: true
+    title:
+      example: "Maison"
+      selector:
+        text:
+
+print_todo:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: printr
+    items:
+      required: true
+      example: '["Sortir le chien", "Arroser les plantes"]'
+      selector:
+        text:
+          multiple: true
+    title:
+      example: "À faire"
+      selector:
+        text:
+
+print_states:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: printr
+    entity_id:
+      required: true
+      selector:
+        entity:
+          multiple: true
+    title:
+      example: "Bilan du soir"
+      selector:
+        text:
+    last_changed:
+      default: false
+      selector:
+        boolean:
+    attributes:
+      default: false
+      selector:
+        boolean:
+    message:
+      example: "Bonne nuit !"
+      selector:
+        text:
+          multiline: true
+    blocks:
+      example: '[{"type": "weather", "location": "Paris"}, {"type": "quote"}]'
+      selector:
+        object:
+    label:
+      selector:
+        text:
+
+preview:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: printr
+    ticket:
+      required: true
+      example: '{"blocks": [{"type": "sudoku", "difficulty": "facile"}]}'
+      selector:
+        object:

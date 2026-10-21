@@ -1,0 +1,176 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Printr",
+        "description": "Address of the `printr serve` server and the script token (`PRINTR_TOKEN` in /etc/printr.env).",
+        "data": {
+          "url": "URL",
+          "api_token": "Token"
+        },
+        "data_description": {
+          "url": "For example http://192.168.1.50:8080"
+        }
+      },
+      "reauth_confirm": {
+        "title": "New token",
+        "description": "Printr ({url}) rejected the stored token.",
+        "data": {
+          "api_token": "Token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to Printr.",
+      "invalid_auth": "Token rejected (does the server have a PRINTR_TOKEN set?)."
+    },
+    "abort": {
+      "already_configured": "This Printr server is already configured.",
+      "reauth_successful": "Token updated.",
+      "already_in_progress": "A Printr setup is already in progress."
+    }
+  },
+  "entity": {
+    "button": {
+      "preset": {
+        "name": "Ticket"
+      }
+    },
+    "sensor": {
+      "last_print": {
+        "name": "Last print"
+      },
+      "prints_today": {
+        "name": "Tickets today"
+      }
+    },
+    "binary_sensor": {
+      "problem": {
+        "name": "Print failure"
+      }
+    },
+    "todo": {
+      "shopping": {
+        "name": "Shopping list"
+      }
+    },
+    "notify": {
+      "ticket": {
+        "name": "Ticket"
+      }
+    },
+    "update": {
+      "software": {
+        "name": "Software"
+      }
+    }
+  },
+  "services": {
+    "print_ticket": {
+      "name": "Print a ticket",
+      "description": "Prints a JSON ticket made of blocks (see the Printr README).",
+      "fields": {
+        "config_entry_id": {
+          "name": "Printr instance",
+          "description": "Optional when there is only one instance."
+        },
+        "ticket": {
+          "name": "Ticket",
+          "description": "Object with `blocks`, and optionally `cut` and `spacing`."
+        },
+        "label": {
+          "name": "Label",
+          "description": "Name shown in the Printr history."
+        }
+      }
+    },
+    "print_text": {
+      "name": "Print text",
+      "description": "Prints free text, with an optional title.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Printr instance",
+          "description": "Optional when there is only one instance."
+        },
+        "text": {
+          "name": "Text",
+          "description": "Text to print."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Large title."
+        }
+      }
+    },
+    "print_todo": {
+      "name": "Print a checklist",
+      "description": "Prints the date and a checklist.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Printr instance",
+          "description": "Optional when there is only one instance."
+        },
+        "items": {
+          "name": "Items",
+          "description": "One checkbox per item."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Defaults to “To do”."
+        }
+      }
+    },
+    "print_states": {
+      "name": "Print states",
+      "description": "Prints the state of Home Assistant entities, one line per entity.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Printr instance",
+          "description": "Optional when there is only one instance."
+        },
+        "entity_id": {
+          "name": "Entities",
+          "description": "Entities to print, in this order."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Defaults to “Home Assistant”."
+        },
+        "last_changed": {
+          "name": "Last changed",
+          "description": "Adds the time of the last state change."
+        },
+        "attributes": {
+          "name": "Attributes",
+          "description": "Adds each entity's attributes in small print."
+        },
+        "message": {
+          "name": "Message",
+          "description": "Free text printed below the states."
+        },
+        "blocks": {
+          "name": "Printr blocks",
+          "description": "Blocks added at the end of the ticket (weather, quote…), as in a JSON ticket."
+        },
+        "label": {
+          "name": "Label",
+          "description": "Name shown in the Printr history."
+        }
+      }
+    },
+    "preview": {
+      "name": "Preview a ticket",
+      "description": "Returns the text preview of a ticket without printing it.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Printr instance",
+          "description": "Optional when there is only one instance."
+        },
+        "ticket": {
+          "name": "Ticket",
+          "description": "JSON ticket, as for printing."
+        }
+      }
+    }
+  }
+}

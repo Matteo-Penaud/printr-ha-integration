@@ -1,0 +1,52 @@
+{
+  "entity": {
+    "button": {
+      "preset": {
+        "default": "mdi:receipt-text-outline"
+      }
+    },
+    "sensor": {
+      "last_print": {
+        "default": "mdi:receipt-clock-outline"
+      },
+      "prints_today": {
+        "default": "mdi:receipt-text-check-outline"
+      }
+    },
+    "binary_sensor": {
+      "problem": {
+        "default": "mdi:printer-check",
+        "state": {
+          "on": "mdi:printer-alert"
+        }
+      }
+    },
+    "todo": {
+      "shopping": {
+        "default": "mdi:cart-outline"
+      }
+    },
+    "notify": {
+      "ticket": {
+        "default": "mdi:printer-pos"
+      }
+    }
+  },
+  "services": {
+    "print_ticket": {
+      "service": "mdi:printer-pos"
+    },
+    "print_text": {
+      "service": "mdi:text-box-outline"
+    },
+    "print_todo": {
+      "service": "mdi:format-list-checks"
+    },
+    "preview": {
+      "service": "mdi:eye-outline"
+    },
+    "print_states": {
+      "service": "mdi:clipboard-list-outline"
+    }
+  }
+}
