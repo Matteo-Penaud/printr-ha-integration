@@ -51,6 +51,14 @@ data:
         location: Paris
 ```
 
+## Blueprint
+
+**Printr — Imprimer des états** prints the state of chosen entities when a trigger fires, with an optional message, extra Printr blocks and a quiet time range.
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FMatteo-Penaud%2Fprintr-ha-integration%2Fblob%2Fmain%2Fblueprints%2Fautomation%2Fprintr%2Fprint_states.yaml)
+
+Or import `https://github.com/Matteo-Penaud/printr-ha-integration/blob/main/blueprints/automation/printr/print_states.yaml` from **Settings → Automations & scenes → Blueprints → Import blueprint**.
+
 ## License
 
 [GPL-3.0](LICENSE)

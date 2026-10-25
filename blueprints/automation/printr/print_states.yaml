@@ -1,0 +1,125 @@
+blueprint:
+  name: Printr — Imprimer des états
+  description: >-
+    Imprime sur Printr l'état d'entités Home Assistant quand un déclencheur se
+    produit (bouton, heure, changement d'état…). Le ticket peut se terminer par
+    un message libre (modèles `{{ }}` acceptés) et par des blocs Printr
+    (météo, citation…).
+  domain: automation
+  author: Matteo-Penaud
+  source_url: https://github.com/Matteo-Penaud/printr-ha-integration/blob/main/blueprints/automation/printr/print_states.yaml
+  homeassistant:
+    min_version: "2024.10.0"
+  input:
+    quand:
+      name: Quand imprimer
+      icon: mdi:gesture-tap-button
+      input:
+        triggers:
+          name: Déclencheurs
+          description: Ce qui lance l'impression.
+          selector:
+            trigger: {}
+        conditions:
+          name: Conditions
+          description: Facultatif. Toutes doivent être vraies pour imprimer.
+          default: []
+          selector:
+            condition: {}
+    contenu:
+      name: Contenu du ticket
+      icon: mdi:receipt-text-outline
+      input:
+        entities:
+          name: Entités
+          description: Une ligne par entité, dans cet ordre.
+          selector:
+            entity:
+              multiple: true
+        title:
+          name: Titre
+          default: Home Assistant
+          selector:
+            text:
+        last_changed:
+          name: Heure du dernier changement
+          description: Ajoute « depuis HH:MM » sous chaque entité.
+          default: false
+          selector:
+            boolean:
+        attributes:
+          name: Attributs
+          description: Ajoute les attributs de chaque entité, en petits caractères.
+          default: false
+          selector:
+            boolean:
+        message:
+          name: Message
+          description: >-
+            Facultatif. Imprimé sous les états ; les modèles sont acceptés, par
+            exemple `{{ states('sensor.temperature_exterieure') }} °C dehors`.
+          default: ""
+          selector:
+            text:
+              multiline: true
+        blocks:
+          name: Blocs Printr
+          description: >-
+            Facultatif. Liste de blocs ajoutés en fin de ticket, comme dans un
+            ticket JSON de Printr. Exemple :
+            `[{"type": "weather", "location": "Paris"}, {"type": "quote"}]`
+          default: []
+          selector:
+            object:
+    silence:
+      name: Plage silencieuse
+      icon: mdi:sleep
+      collapsed: true
+      input:
+        quiet_enabled:
+          name: Activer
+          description: Ne rien imprimer pendant cette plage (l'imprimante est bruyante).
+          default: false
+          selector:
+            boolean:
+        quiet_start:
+          name: Début
+          default: "22:00:00"
+          selector:
+            time:
+        quiet_end:
+          name: Fin
+          default: "07:00:00"
+          selector:
+            time:
+
+mode: single
+max_exceeded: silent
+
+variables:
+  quiet_enabled: !input quiet_enabled
+
+triggers: !input triggers
+
+conditions:
+  - condition: and
+    conditions: !input conditions
+  # Hors plage silencieuse : entre la fin et le début (la plage peut passer minuit).
+  - condition: or
+    conditions:
+      - condition: template
+        value_template: "{{ not quiet_enabled }}"
+      - condition: time
+        after: !input quiet_end
+        before: !input quiet_start
+
+actions:
+  - action: printr.print_states
+    data:
+      entity_id: !input entities
+      title: !input title
+      last_changed: !input last_changed
+      attributes: !input attributes
+      message: !input message
+      blocks: !input blocks
+      label: "{{ this.attributes.friendly_name | default('Printr') }}"
